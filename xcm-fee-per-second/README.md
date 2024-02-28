@@ -20,8 +20,8 @@ From the directory where the script is located, run:
 
 This is going to have the following output: 
 
-`Token price is $51.05
-The fee_per_second needs to be set 391772771792`
+`Token price is $51.05`<br />
+`The fee_per_second needs to be set 391772771792`
 
 If we want to verify if the target price is 0.02 USD we can calculate the total XCM fee as follows:
 

@@ -10,9 +10,9 @@ From the directory where the script is located, run:
 
 ## Script parameters
 
-`--decimals` or `--d`, decimals of the token used for calculations
-`--asset` or `--a`, (optional only if `--price` provided) which specifies asset name compatible with the Coingecko API
-`--price` or `--p`, (optional only if `--asset` provided) if the asset is not supported by Coingecko, specifies the price to use
+- `--decimals` or `--d`, decimals of the token used for calculations
+- `--asset` or `--a`, (optional only if `--price` provided) which specifies asset name compatible with the Coingecko API
+- `--price` or `--p`, (optional only if `--asset` provided) if the asset is not supported by Coingecko, specifies the price to use
 
 ## Example
 

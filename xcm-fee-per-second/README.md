@@ -14,7 +14,7 @@ From the directory where the script is located, run:
 - `--asset` or `--a`, (optional only if `--price` provided) which specifies asset name compatible with the Coingecko API
 - `--price` or `--p`, (optional only if `--asset` provided) if the asset is not supported by Coingecko, specifies the price to use
 
-## Example
+## Running the script - example
 
 `yarn calculate-fee-per-second --d 12 --asset kusama`
 

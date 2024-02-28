@@ -3,7 +3,6 @@ import CoinGecko from "coingecko-api";
 
 const args = yargs.options({
   decimals: { type: "string", demandOption: true, alias: "d" },
-  "xcm-weight-cost": { type: "string", demandOption: true, alias: "xwc", default: "1000000000" },
   price: { type: "string", demandOption: false, alias: "p" }, // overwrite price
   asset: { type: "string", demandOption: false, alias: "a" },
 }).argv;
@@ -15,9 +14,11 @@ async function main() {
 
   // Decimals factor based on decimals number passed as argument
   const decimalsFactor = 10 ** args["decimals"];
-
-  // XCM Weight Cost for executing one XCM instruction
-  const xcmTotalCost = BigInt(args["xwc"]);
+  
+  // This is the estimated total weight cost for executing one XCM operation
+  // The value is configured in all runtimes
+  // E.g. Pendulum: https://github.com/pendulum-chain/pendulum/blob/4dda8b62489b553ace5a4ae536d240c0f7f24fd0/runtime/pendulum/src/xcm_config.rs#L212
+  const xcmTotalCost = BigInt(1000000000);
 
   // Start CoinGecko API client
   const CoinGeckoClient = new CoinGecko();

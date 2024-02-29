@@ -49,11 +49,6 @@
     lodash.isundefined "^3.0.1"
     lodash.uniq "^4.5.0"
 
-"@moonbeam-network/api-augment@^0.1801.0":
-  version "0.1801.0"
-  resolved "https://registry.npmjs.org/@moonbeam-network/api-augment/-/api-augment-0.1801.0.tgz"
-  integrity sha512-sUqqWZhHVnrGQfJ37jzGzbMz5U3+U2SC5zLVFaJAqncairHuoAoPb8D9dza2erxSZTx5g8cqEeX+z4phMEJLWQ==
-
 "@noble/curves@^1.3.0":
   version "1.3.0"
   resolved "https://registry.npmjs.org/@noble/curves/-/curves-1.3.0.tgz"

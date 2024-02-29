@@ -8,13 +8,14 @@ const args = yargs.options({
 }).argv;
 
 async function main() {
-  // Target price in USD for executing one XCM instruction is 2 CENTS USD
-  // This is an average price for executing one XCM instruction in other chains
-  const targetPrice = BigInt(10 ** args["decimals"] * 0.02); 
 
   // Decimals factor based on decimals number passed as argument
   const decimalsFactor = 10 ** args["decimals"];
-  
+
+  // Target price in USD for executing one XCM instruction is 2 CENTS USD
+  // This is an average price for executing one XCM instruction in other chains
+  const targetPrice = BigInt(decimalsFactor * 0.02); 
+
   // This is the estimated total weight cost for executing one XCM operation
   // The value is configured in all runtimes
   // E.g. Pendulum: https://github.com/pendulum-chain/pendulum/blob/4dda8b62489b553ace5a4ae536d240c0f7f24fd0/runtime/pendulum/src/xcm_config.rs#L212

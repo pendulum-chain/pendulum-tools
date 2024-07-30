@@ -1,0 +1,14 @@
+{
+    "name": "stellar-address-converter",
+    "version": "1.0.0",
+    "description": "Converts stellar addresses form raw bytes to readable format and viceversa",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Gonzalo Montiel <gon.montiel@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "stellar-sdk": "^10.4.0"
+    }
+}

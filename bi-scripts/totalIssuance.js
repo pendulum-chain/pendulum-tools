@@ -45,9 +45,12 @@ async function main() {
 
   accounts.forEach((entry) => {
     const balances = entry[1].toHuman().data;
-    const miscFrozen = BigInt(balances.miscFrozen.replace(/,/g, ""));
-    const feeFrozen = BigInt(balances.feeFrozen.replace(/,/g, ""));
-    const frozen = miscFrozen > feeFrozen ? miscFrozen : feeFrozen;
+    // Commented these fields since they seem to not exist anymore on accounts
+    // I may be wrong though
+    // const miscFrozen = BigInt(balances.miscFrozen.replace(/,/g, ""));
+    // const feeFrozen = BigInt(balances.feeFrozen.replace(/,/g, ""));
+    // const frozen = miscFrozen > feeFrozen ? miscFrozen : feeFrozen;
+    const frozen = BigInt(balances.frozen.replace(/,/g, ""));
     const free = BigInt(balances.free.replace(/,/g, ""));
     const reserved = BigInt(balances.reserved.replace(/,/g, ""));
 

@@ -1,0 +1,23 @@
+{
+    "name": "bi-scripts",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pendulum-chain/bi-scripts.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/pendulum-chain/bi-scripts/issues"
+    },
+    "homepage": "https://github.com/pendulum-chain/bi-scripts#readme",
+    "dependencies": {
+        "@polkadot/api": "^10.1.3"
+    }
+}

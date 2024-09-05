@@ -29,6 +29,40 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+async function fetchBatchingServer(payload: any): Promise<BatchingServerResponse> {
+    return new Promise((resolve, reject) => {
+        const hostname = LOCAL_BATCHING_SERVER ? 'localhost:8070' : 'batching-server.pendulumchain.tech';
+        const options = {
+            hostname,
+            path: '/currencies',
+            method: 'POST',
+            agent,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const queryFunction = LOCAL_BATCHING_SERVER ? http : https;
+
+        const req = queryFunction.request(options, (res) => {
+            let data = '';
+            res.on('data', (chunk) => data += chunk);
+            res.on('end', () => {
+                resolve({
+                    status: res.statusCode,
+                    statusText: res.statusMessage,
+                    headers: res.headers,
+                    body: data,
+                    text: async () => data
+                });
+            });
+        });
+        req.on('error', reject);
+        req.write(JSON.stringify(payload));
+        req.end();
+    });
+}
+
 const server = serve({
     port: 3000,
     async fetch(req: Request) {
@@ -63,37 +97,3 @@ const server = serve({
 });
 
 console.log(`Listening on localhost:${server.port}`);
-
-async function fetchBatchingServer(payload: any): Promise<BatchingServerResponse> {
-    return new Promise((resolve, reject) => {
-        const hostname = LOCAL_BATCHING_SERVER ? 'localhost:8070' : 'batching-server.pendulumchain.tech';
-        const options = {
-            hostname,
-            path: '/currencies',
-            method: 'POST',
-            agent,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        const queryFunction = LOCAL_BATCHING_SERVER ? http : https;
-
-        const req = queryFunction.request(options, (res) => {
-            let data = '';
-            res.on('data', (chunk) => data += chunk);
-            res.on('end', () => {
-                resolve({
-                    status: res.statusCode,
-                    statusText: res.statusMessage,
-                    headers: res.headers,
-                    body: data,
-                    text: async () => data
-                });
-            });
-        });
-        req.on('error', reject);
-        req.write(JSON.stringify(payload));
-        req.end();
-    });
-}

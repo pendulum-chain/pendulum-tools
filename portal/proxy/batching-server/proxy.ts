@@ -1,17 +1,27 @@
-import { serve } from "bun";
+import {serve} from "bun";
 import https from "https";
+import http from "http";
 
 interface BatchingServerResponse {
     status: number;
     statusText: string;
     headers: Record<string, string>;
     body: string;
+
     text(): Promise<string>;
 }
 
-const httpsAgent = new https.Agent({
-    rejectUnauthorized: false,
-});
+// Change this to false to use the production batching server
+const LOCAL_BATCHING_SERVER = true;
+
+const agent = LOCAL_BATCHING_SERVER ?
+    new http.Agent({
+        rejectUnauthorized: false,
+    })
+    : new https.Agent({
+        rejectUnauthorized: false,
+    });
+
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -19,11 +29,11 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-serve({
+const server = serve({
     port: 3000,
     async fetch(req: Request) {
         if (req.method === "OPTIONS") {
-            return new Response(null, { headers: corsHeaders });
+            return new Response(null, {headers: corsHeaders});
         }
 
         try {
@@ -40,7 +50,7 @@ serve({
             return new Response(batchingServerResponse.body, {
                 status: batchingServerResponse.status,
                 statusText: batchingServerResponse.statusText,
-                headers: { ...batchingServerResponse.headers, ...corsHeaders },
+                headers: {...batchingServerResponse.headers, ...corsHeaders},
             });
         } catch (error) {
             console.error('Error:', error);
@@ -52,19 +62,24 @@ serve({
     },
 });
 
+console.log(`Listening on localhost:${server.port}`);
+
 async function fetchBatchingServer(payload: any): Promise<BatchingServerResponse> {
     return new Promise((resolve, reject) => {
+        const hostname = LOCAL_BATCHING_SERVER ? 'localhost:8070' : 'batching-server.pendulumchain.tech';
         const options = {
-            hostname: 'batching-server.pendulumchain.tech',
+            hostname,
             path: '/currencies',
             method: 'POST',
-            agent: httpsAgent,
+            agent,
             headers: {
                 'Content-Type': 'application/json'
             }
         };
 
-        const req = https.request(options, (res) => {
+        const queryFunction = LOCAL_BATCHING_SERVER ? http : https;
+
+        const req = queryFunction.request(options, (res) => {
             let data = '';
             res.on('data', (chunk) => data += chunk);
             res.on('end', () => {
